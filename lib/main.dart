@@ -1,18 +1,29 @@
 import 'package:flutter/material.dart';
+import "AfterLogin.dart";
 
-void main() => runApp(const MyApp());
+void main() {
+      runApp(
+        MaterialApp(
+          title: "App",
+          home: MyApp()
+        )
+      );
+    }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
-
-  static const String _title = 'Example Login Page';
+  static const String _title = 'UTS Mobile Project';
+  final user = TextEditingController();
+  final pwd = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: _title,
       home: Scaffold(
-        appBar: AppBar(title: const Text(_title)),
+        appBar: AppBar(
+          title: const Text(_title),
+          backgroundColor: Color.fromARGB(255, 211, 58, 47),
+          centerTitle: true,),
         body: const MyStatefulWidget(),
       ),
     );
@@ -27,8 +38,8 @@ class MyStatefulWidget extends StatefulWidget {
 }
 
 class _MyStatefulWidgetState extends State<MyStatefulWidget> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  TextEditingController name = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +53,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
                 child: const Text(
                   'azizFrachman',
                   style: TextStyle(
-                      color: Colors.blue,
+                      color: Color.fromARGB(255, 211, 58, 47),
                       fontWeight: FontWeight.w500,
                       fontSize: 30),
                 )),
@@ -56,7 +67,7 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
             Container(
               padding: const EdgeInsets.all(10),
               child: TextField(
-                controller: nameController,
+                controller: name,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'User Name',
@@ -67,44 +78,35 @@ class _MyStatefulWidgetState extends State<MyStatefulWidget> {
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextField(
                 obscureText: true,
-                controller: passwordController,
+                controller: password,
                 decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
                 ),
               ),
             ),
-            TextButton(
-              onPressed: () {
-                //forgot password screen
-              },
-              child: const Text('Forgot Password',),
-            ),
             Container(
                 height: 50,
                 padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+                margin: const EdgeInsets.only(top: 10.0),
                 child: ElevatedButton(
                   child: const Text('Login'),
                   onPressed: () {
-                    print(nameController.text);
-                    print(passwordController.text);
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) =>AfterLogin(
+                        user: name.text, 
+                        pwd: password.text,
+                      )
+                    ),
+                  );
+                    
                   },
+                  style: ButtonStyle(
+                  backgroundColor:
+                   MaterialStateProperty.all(Color.fromARGB(255, 211, 58, 47))),
                 )
-            ),
-            Row(
-              children: <Widget>[
-                const Text('Does not have account?'),
-                TextButton(
-                  child: const Text(
-                    'Sign in',
-                    style: TextStyle(fontSize: 20),
-                  ),
-                  onPressed: () {
-                    //signup screen
-                  },
-                )
-              ],
-              mainAxisAlignment: MainAxisAlignment.center,
             ),
           ],
         ));
